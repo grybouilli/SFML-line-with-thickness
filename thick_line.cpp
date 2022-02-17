@@ -1,4 +1,4 @@
-#include "hdr/thick_line.hpp"
+#include "thick_line.hpp"
 #include <cmath>
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
@@ -6,7 +6,6 @@
 
 Thick_Line::Thick_Line()
 : _shape{sf::TriangleStrip}
-, _dots {}
 , _thickness { THICKNESS }
 , _last_dot {-2}
 {
@@ -15,7 +14,6 @@ Thick_Line::Thick_Line()
 
 Thick_Line::Thick_Line(const point_set& pts)
 : _shape{sf::TriangleStrip}
-, _dots{} 
 , _thickness { THICKNESS }
 , _last_dot {-2}
 {
@@ -80,12 +78,9 @@ sf::Vector2f intersection_point(sf::Vector2f dir1, sf::Vector2f pt1, sf::Vector2
 	return sf::Vector2f(xsol, a2 * xsol + b2);
 }
 
-void Thick_Line::add_point(sf::Vector2i pt)
+void Thick_Line::add_point(sf::Vector2f f_pt)
 {
-	
-	add_dot(pt.x,pt.y);
 	// case empty _shape
-	sf::Vector2f f_pt{ pt.x,pt.y };
 	if(_last_dot < 0)
 	{
 		add_point_with_offset(f_pt,sf::Vector2f(0,_thickness/2.f));
@@ -156,8 +151,6 @@ void Thick_Line::set_color(sf::Color c)
 	_color = c;
 	for(auto i = 0; i < _shape.getVertexCount(); ++i)
 		_shape[i].color = c;
-	for(auto i = 0; i < _dots.size(); ++i)
-		_dots[i].setOutlineColor(c);
 }
 
 void Thick_Line::set_thickness(float new_t)
@@ -171,13 +164,6 @@ void Thick_Line::set_thickness(float new_t)
 		_shape[i].position = mid - sep;
 		_shape[i+1].position = mid + sep;
 	}
-	for(auto i = 0; i < _dots.size(); ++i)
-	{
-		_dots[i].setOutlineThickness(new_t);
-		_dots[i].setOrigin(2*new_t,2*new_t);
-		_dots[i].setRadius(2*new_t);
-	}
-
 	_thickness = new_t;
 }
 
@@ -185,20 +171,6 @@ void Thick_Line::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	states.transform *= getTransform();
 	target.draw(_shape, states);
-	for(auto d : _dots)
-		target.draw(d,states);
-}
-
-void Thick_Line::add_dot(float x, float y)
-{
-	// creates a small circle to model the connected dots
-	sf::CircleShape dot { 2 * _thickness };
-	dot.setOrigin(2 * _thickness,2 * _thickness);
-	dot.setPosition(x,y);
-	dot.setFillColor(sf::Color::Transparent);
-	dot.setOutlineThickness(_thickness);
-	dot.setOutlineColor(_color);
-	_dots.push_back(dot);
 }
 
 void Thick_Line::add_point_with_offset(sf::Vector2f pt, sf::Vector2f offset)
