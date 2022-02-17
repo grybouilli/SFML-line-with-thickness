@@ -29,14 +29,14 @@ public:
 	void 									set_thickness(float);
 
 private:					
-	virtual void							draw(sf::RenderTarget& target, sf::RenderStates states) const;
+	virtual void								draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
 	void									add_point_with_offset(sf::Vector2f, sf::Vector2f);
-	std::pair<sf::Vector2f,sf::Vector2f>	make_offset(sf::Vector2f,sf::Vector2f,sf::Vector2f);
+	std::pair<sf::Vector2f,sf::Vector2f>					make_offset(sf::Vector2f,sf::Vector2f,sf::Vector2f);
 
 	float 									_thickness;
 	sf::Color								_color;
-	sf::VertexArray							_shape;	
+	sf::VertexArray								_shape;	
 	size_t 									_last_dot;
 };
 
@@ -44,6 +44,6 @@ private:
 sf::Vector2f	unit_vector(sf::Vector2f v);
 sf::Vector2f	mid_point(sf::Vector2f u, sf::Vector2f v);
 sf::Vector2f	normal_vector(sf::Vector2f u);
-bool 			are_colinear(sf::Vector2f u, sf::Vector2f v);
+bool 		are_colinear(sf::Vector2f u, sf::Vector2f v);
 sf::Vector2f	intersection_point(sf::Vector2f dir1, sf::Vector2f pt1, sf::Vector2f dir2, sf::Vector2f pt2)
 #endif
