@@ -11,6 +11,7 @@
 
 static const float THICKNESS = 2.5;
 static const float DOT_SIZE = 5.f;
+static const sf::Color COLOR = sf::Color::White;
 
 using point_set = std::vector<sf::Vector2f>;
 class Thick_Line: public sf::Drawable, public sf::Transformable
@@ -37,7 +38,7 @@ private:
 	float 									_thickness;
 	sf::Color								_color;
 	sf::VertexArray							_shape;	
-	size_t 									_last_dot;
+	int 									_last_dot;
 };
 
 
@@ -45,5 +46,5 @@ sf::Vector2f	unit_vector(sf::Vector2f v);
 sf::Vector2f	mid_point(sf::Vector2f u, sf::Vector2f v);
 sf::Vector2f	normal_vector(sf::Vector2f u);
 bool 			are_colinear(sf::Vector2f u, sf::Vector2f v);
-sf::Vector2f	intersection_point(sf::Vector2f dir1, sf::Vector2f pt1, sf::Vector2f dir2, sf::Vector2f pt2)
+sf::Vector2f	intersection_point(sf::Vector2f dir1, sf::Vector2f pt1, sf::Vector2f dir2, sf::Vector2f pt2);
 #endif

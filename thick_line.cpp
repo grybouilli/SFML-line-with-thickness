@@ -5,16 +5,18 @@
 #include <stdexcept>
 
 Thick_Line::Thick_Line()
-: _shape{sf::TriangleStrip}
-, _thickness { THICKNESS }
+: _thickness { THICKNESS }
+, _color {COLOR}
+, _shape{sf::TriangleStrip}
 , _last_dot {-2}
 {
 
 }
 
 Thick_Line::Thick_Line(const point_set& pts)
-: _shape{sf::TriangleStrip}
-, _thickness { THICKNESS }
+: _thickness { THICKNESS }
+, _color {COLOR}
+, _shape{sf::TriangleStrip}
 , _last_dot {-2}
 {
 	renew_shape(pts);
@@ -25,7 +27,7 @@ void Thick_Line::renew_shape(const point_set& pts)
 	_last_dot = -2;
 	auto pts_count = pts.size();
 	_shape = sf::VertexArray(sf::TriangleStrip,0);
-	for(auto i = 0; i < pts_count; ++i)
+	for(auto i = 0; i < (int)pts_count; ++i)
 	{
 		add_point(pts[i]);
 	}
@@ -149,14 +151,14 @@ void Thick_Line::close_line()
 void Thick_Line::set_color(sf::Color c)
 {
 	_color = c;
-	for(auto i = 0; i < _shape.getVertexCount(); ++i)
+	for(auto i = 0; i < (int)_shape.getVertexCount(); ++i)
 		_shape[i].color = c;
 }
 
 void Thick_Line::set_thickness(float new_t)
 {
 	float ratio { new_t / _thickness };
-	for(auto i = 0; i < _shape.getVertexCount()-1; i+=2)
+	for(auto i = 0; i < (int)_shape.getVertexCount()-1; i+=2)
 	{
 		sf::Vector2f mid { mid_point(_shape[i+1].position,_shape[i].position) };
 		sf::Vector2f sep { _shape[i+1].position-_shape[i].position };
@@ -181,7 +183,7 @@ void Thick_Line::add_point_with_offset(sf::Vector2f pt, sf::Vector2f offset)
 	v2.position += offset;
 
 	//if some spaces is available in _shape, we use it, otherwise we append new vertices
-	if(_shape.getVertexCount() > _last_dot+3)
+	if((int)_shape.getVertexCount() > _last_dot+3)
 	{
 		_shape[_last_dot+2] = v1;
 		_shape[_last_dot+3] = v2;
