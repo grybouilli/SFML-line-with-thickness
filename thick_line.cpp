@@ -169,6 +169,16 @@ void Thick_Line::set_thickness(float new_t)
 	_thickness = new_t;
 }
 
+float Thick_Line::get_thickness() &&
+{
+	return _thickness;
+}
+
+const float& Thick_Line::get_thickness() const&
+{
+	return _thickness;
+}
+
 void Thick_Line::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	states.transform *= getTransform();

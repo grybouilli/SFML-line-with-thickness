@@ -29,6 +29,9 @@ public:
 	void 									set_color(sf::Color);
 	void 									set_thickness(float);
 
+	float 									get_thickness() &&;
+	const float&							get_thickness() const&;
+
 private:					
 	virtual void								draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
