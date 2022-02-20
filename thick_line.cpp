@@ -120,19 +120,15 @@ void Thick_Line::pop_point()
 {
 	if(_last_dot < 0)
 		return;
-
-	_shape[_last_dot].color = sf::Color::Transparent;
+	if(_last_dot >= 2)
+	{
+		_shape[_last_dot+0].position = _shape[_last_dot-2].position;
+		_shape[_last_dot+1].position = _shape[_last_dot-1].position;
+	}
+	_shape[_last_dot+0].color = sf::Color::Transparent;
 	_shape[_last_dot+1].color = sf::Color::Transparent;
 	
 	_last_dot -=2;
-	if(_last_dot > 0)
-	{
-		sf::Vector2f normal_direction { normal_vector(_shape[_last_dot-1].position-_shape[_last_dot-2].position) };
-		sf::Vector2f mid { mid_point( _shape[_last_dot-1].position, _shape[_last_dot-2].position)};
-		sf::Vector2f offset = _thickness * normal_direction / 2.f;
-		_shape[_last_dot].position = mid - offset;
-		_shape[_last_dot+1].position = mid + offset;
-	}
 }
 
 void Thick_Line::close_line()
@@ -143,7 +139,9 @@ void Thick_Line::close_line()
 	auto offset = make_offset(penultimate_point,closing_point,second_point);
 
 	add_point_with_offset(closing_point,sf::Vector2f(0,0));
-
+	
+	_shape[0].position = offset.first;
+	_shape[1].position = offset.second;
 	_shape[_last_dot].position = offset.first;
 	_shape[_last_dot+1].position = offset.second;
 }
@@ -197,6 +195,11 @@ void Thick_Line::add_point_with_offset(sf::Vector2f pt, sf::Vector2f offset)
 	{
 		_shape[_last_dot+2] = v1;
 		_shape[_last_dot+3] = v2;
+		for(auto i = _last_dot + 4; i < (int)_shape.getVertexCount() - 1; ++i)
+		{
+			_shape[i].position = _shape[i-2].position;
+			_shape[i+1].position = _shape[i-1].position;
+		}
 	}
 	else
 	{
