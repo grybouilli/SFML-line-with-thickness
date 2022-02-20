@@ -30,10 +30,10 @@ public:
 	void 									set_thickness(float);
 
 private:					
-	virtual void							draw(sf::RenderTarget& target, sf::RenderStates states) const;
+	virtual void								draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
 	void									add_point_with_offset(sf::Vector2f, sf::Vector2f);
-	std::pair<sf::Vector2f,sf::Vector2f>	make_offset(sf::Vector2f,sf::Vector2f,sf::Vector2f);
+	std::pair<sf::Vector2f,sf::Vector2f>					make_offset(sf::Vector2f,sf::Vector2f,sf::Vector2f);
 
 	float 									_thickness;
 	sf::Color								_color;
