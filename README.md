@@ -13,6 +13,6 @@ When adding a new point to create a new line to the set of connected lines, the 
 
 ![Drawing of the math model](https://github.com/grybouilli/SFML-line-with-thickness/blob/1e89c4b1115d3eaaa6852aa5001920c09bc7d5c1/thick_line_math_model.png)
 
-We adding a new point with the middle point between H and M. The previous point of the set of lines is E. The offset points of E to be calculated are J and I. They are the intersection between the lines directed by the vectors u and v with are also the vectors giving the directions of the lines.
+We're adding a new point with the middle point between H and M. The previous point of the set of lines is E. The offset points of E to be calculated are J and I. They are the intersection between the lines directed by the vectors u and v which are also the vectors giving the directions of the lines.
 
 ## Examples
