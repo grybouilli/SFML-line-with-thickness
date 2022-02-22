@@ -4,19 +4,19 @@
 #include <cmath>
 #include <stdexcept>
 
-Thick_Line::Thick_Line() :
-	_thickness { THICKNESS },
-	_color { COLOR },
-	_shape { sf::TriangleStrip },
-	_last_dot { -2 }
+Thick_Line::Thick_Line() 
+: _thickness { THICKNESS }
+, _color { COLOR }
+, _shape { sf::TriangleStrip }
+, _last_dot { -2 }
 {
 }
 
-Thick_Line::Thick_Line(const point_set& pts) :
-	_thickness { THICKNESS },
-	_color { COLOR },
-	_shape { sf::TriangleStrip },
-	_last_dot { -2 }
+Thick_Line::Thick_Line(const point_set& pts) 
+: _thickness { THICKNESS }
+, _color { COLOR }
+, _shape { sf::TriangleStrip }
+, _last_dot { -2 }
 {
 	renew_shape(pts);
 }
@@ -130,16 +130,16 @@ void Thick_Line::pop_point()
 
 void Thick_Line::close_line()
 {
-	if(_last_dot < 4)
+	if (_last_dot < 4)
 		return;
 
-	sf::Vector2f before_last { mid_point(_shape[_last_dot].position, _shape[_last_dot+1].position)};
+	sf::Vector2f before_last { mid_point(_shape[_last_dot].position, _shape[_last_dot + 1].position) };
 	sf::Vector2f closing_point { mid_point(_shape[0].position, _shape[1].position) };
-	sf::Vector2f second_point { mid_point(_shape[2].position, _shape[3].position)};
+	sf::Vector2f second_point { mid_point(_shape[2].position, _shape[3].position) };
 	add_point(closing_point);
 
-	auto offset { make_offset(before_last,closing_point,second_point)};
-	_shape[0].position = offset.first;  
+	auto offset { make_offset(before_last, closing_point, second_point) };
+	_shape[0].position = offset.first;
 	_shape[1].position = offset.second;
 	_shape[_last_dot].position = offset.first;
 	_shape[_last_dot + 1].position = offset.second;
