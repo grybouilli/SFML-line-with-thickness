@@ -133,17 +133,11 @@ void Thick_Line::pop_point()
 
 void Thick_Line::close_line()
 {
-	sf::Vector2f closing_point		{ mid_point(_shape[0].position, _shape[1].position) };
-	sf::Vector2f second_point		{ mid_point(_shape[2].position, _shape[3].position) };
-	sf::Vector2f penultimate_point 	{ mid_point(_shape[_last_dot].position,_shape[_last_dot+1].position)};
-	auto offset = make_offset(penultimate_point,closing_point,second_point);
+	sf::Vector2f closing_point { mid_point(_shape[0].position, _shape[1].position) };
+	add_point(closing_point);
 
-	add_point_with_offset(closing_point,sf::Vector2f(0,0));
-	
-	_shape[0].position = offset.first;
-	_shape[1].position = offset.second;
-	_shape[_last_dot].position = offset.first;
-	_shape[_last_dot+1].position = offset.second;
+	_shape[0].position = _shape[_last_dot].position;
+	_shape[1].position = _shape[_last_dot+1].position;
 }
 
 void Thick_Line::set_color(sf::Color c)
